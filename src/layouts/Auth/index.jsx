@@ -26,7 +26,7 @@ const Auth = () => {
     <div className={style['auth']}>
       <div className={style['img']}>
         <img width={224} height={222} src={`${process.env.PUBLIC_URL}/assets/images/favicon.png`} alt="" />
-        <span>SCI Work</span>
+        <span>SCI User Manager</span>
       </div>
       <div className={style['title']}>{title}</div>
       <Outlet />

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import style from './register.module.scss';
 import { Link } from 'react-router-dom';
 import Notice from '@/components/Notice';
-// import { pressEnter, validateEmail } from '@/utils/help';
-
 import Loading from '@/components/Loading';
 import { pressEnter, validateEmail } from '@/utils/help';
 
@@ -12,7 +10,7 @@ const Register = () => {
     firstName: '',
     lastName: '',
     email: '',
-    position: '',
+
     password: '',
     rePassword: '',
   });
@@ -25,7 +23,6 @@ const Register = () => {
     if (
       registerData.firstName === '' ||
       registerData.lastName === '' ||
-      registerData.position === '' ||
       registerData.email === '' ||
       registerData.password === '' ||
       registerData.rePassword === ''
@@ -74,14 +71,7 @@ const Register = () => {
             onChange={handleRegister}
           />
         </div>
-        <div className={style['input']}>
-          <label htmlFor="position">Vị trí</label>
-          <select name="position" onChange={handleRegister} defaultValue="" value={registerData.position}>
-            <option value="" disabled>
-              Chọn vị trí
-            </option>
-          </select>
-        </div>
+
         <div className={style['input']}>
           <label htmlFor="email">Email</label>
           <input

@@ -5,6 +5,7 @@ import DataTable from 'react-data-table-component';
 import { Tooltip } from 'react-tooltip';
 import NoticeModal from '@/components/NoticeModal';
 import StaffDetail from '@/components/StaffDetail';
+import CreateUser from '@/components/CreateUser';
 
 const customStyles = {
   headRow: {
@@ -106,6 +107,7 @@ const data = [
 const Home = () => {
   const [isDelete, setIsDelete] = useState(false);
   const [isDetail, setIsDetail] = useState(false);
+  const [isCreate, setIsCreate] = useState(false);
   const [itemId, setItemId] = useState(0);
   const handleDelete = () => {
     setIsDelete(false);
@@ -187,7 +189,12 @@ const Home = () => {
     <div>
       <Header />
       <div className={style['main']}>
-        <div className={style['title']}>Danh sách user</div>
+        <div className={style['title']}>
+          Danh sách user
+          <button onClick={() => setIsCreate(true)}>
+            Thêm mới <i className="icon-plus-1"></i>
+          </button>
+        </div>
         <div className={style['dataTable']}>
           <DataTable
             columns={columns}
@@ -203,6 +210,7 @@ const Home = () => {
         <NoticeModal hide={() => setIsDelete(false)} message={'Bạn có chắc muốn xóa không ?'} action={handleDelete} />
       )}
       {isDetail && <StaffDetail close={() => setIsDetail(false)} />}
+      {isCreate && <CreateUser hide={() => setIsCreate(false)} />}
     </div>
   );
 };

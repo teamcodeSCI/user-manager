@@ -10,7 +10,8 @@
     align-items: flex-start;
 
     .box {
-        width: 900px;
+        width: 90%;
+        max-width: 900px;
         background: #fff;
         margin-top: 15vh;
         overflow-y: hidden;

@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import DataTable from 'react-data-table-component';
 import { Tooltip } from 'react-tooltip';
 import NoticeModal from '@/components/NoticeModal';
+import StaffDetail from '@/components/StaffDetail';
 
 const customStyles = {
   headRow: {
@@ -201,6 +202,7 @@ const Home = () => {
       {isDelete && (
         <NoticeModal hide={() => setIsDelete(false)} message={'Bạn có chắc muốn xóa không ?'} action={handleDelete} />
       )}
+      {isDetail && <StaffDetail close={() => setIsDetail(false)} />}
     </div>
   );
 };

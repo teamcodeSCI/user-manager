@@ -10,12 +10,10 @@ const Register = () => {
     firstName: '',
     lastName: '',
     email: '',
-
     password: '',
     rePassword: '',
   });
   const [notify, setNotify] = useState('');
-
   const handleRegister = (e) => {
     setRegisterData({ ...registerData, [e.target.name]: e.target.value });
   };
@@ -39,9 +37,8 @@ const Register = () => {
     setNotify('');
   };
   // useEffect(() => {
-  //   dispatch(fetchPosition());
   //   if (registerLoaded) window.location.assign(APP_URL + '/auth/login');
-  // }, [dispatch, registerLoaded, navigate]);
+  // }, [registerLoaded]);
   return (
     <div className={style['register']}>
       {(false || false) && <Loading />}

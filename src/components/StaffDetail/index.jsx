@@ -1,10 +1,19 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import style from './staffDetail.module.scss';
 import StaffInfo from '../StaffInfo';
 import { useOutside } from '@/utils/help';
+import Account from '../Account';
+import Password from '../Password';
 
 const StaffDetail = ({ close }) => {
   const staffRef = useRef(null);
+  const [tabName, setTabName] = useState('Thông tin');
+  const tab = [
+    { name: 'Thông tin', component: <StaffInfo /> },
+    { name: 'Tài khoản', component: <Account /> },
+    { name: 'Bảo mật', component: <Password /> },
+  ];
+  const render = tab.filter((item) => item.name === tabName);
   useOutside(staffRef, close);
   return (
     <div className={style['staffDetail']}>
@@ -13,11 +22,17 @@ const StaffDetail = ({ close }) => {
           Chi tiết <button onClick={close}>✕</button>
         </div>
         <ul className={style['tab']}>
-          <li style={{ borderColor: '#232323' }}>Thông tin</li>
-          <li>Tài khoản</li>
-          <li>Mật khẩu</li>
+          {tab.map((item) => (
+            <li
+              key={item.name}
+              onClick={() => setTabName(item.name)}
+              style={tabName === item.name ? { borderColor: '#232323' } : {}}
+            >
+              {item.name}
+            </li>
+          ))}
         </ul>
-        <StaffInfo />
+        {render[0].component}
       </div>
     </div>
   );

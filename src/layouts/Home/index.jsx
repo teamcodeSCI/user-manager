@@ -7,6 +7,7 @@ import NoticeModal from '@/components/NoticeModal';
 import StaffDetail from '@/components/StaffDetail';
 import CreateUser from '@/components/CreateUser';
 import { customStyles, paginationComponentOptions, userList } from '@/utils/util';
+import Search from '@/components/Search';
 
 const Home = () => {
   const [isDelete, setIsDelete] = useState(false);
@@ -19,8 +20,8 @@ const Home = () => {
   };
   const columns = [
     {
-      name: 'ID',
-      selector: (row) => row.id,
+      name: 'STT',
+      selector: (row, index) => index + 1,
       grow: 0.5,
     },
     {
@@ -93,8 +94,9 @@ const Home = () => {
     <div>
       <Header />
       <div className={style['main']}>
-        <div className={style['title']}>
-          Danh sách user
+        <div className={style['title']}>Danh sách user</div>
+        <div className={style['action']}>
+          <Search />
           <button onClick={() => setIsCreate(true)}>
             Thêm mới <i className="icon-plus-1"></i>
           </button>

@@ -5,11 +5,11 @@ import { useOutside } from '@/utils/help';
 import Account from '../Account';
 import Password from '../Password';
 
-const StaffDetail = ({ close }) => {
+const StaffDetail = ({ close, staffInfo }) => {
   const staffRef = useRef(null);
   const [tabName, setTabName] = useState('Thông tin');
   const tab = [
-    { name: 'Thông tin', component: <StaffInfo /> },
+    { name: 'Thông tin', component: <StaffInfo staffInfo={staffInfo} /> },
     { name: 'Tài khoản', component: <Account /> },
     { name: 'Bảo mật', component: <Password /> },
   ];

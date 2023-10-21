@@ -145,7 +145,12 @@ const Home = () => {
       {isDelete && (
         <NoticeModal hide={() => setIsDelete(false)} message={'Bạn có chắc muốn xóa không ?'} action={handleDelete} />
       )}
-      {isDetail && <StaffDetail close={() => setIsDetail(false)} />}
+      {isDetail && (
+        <StaffDetail
+          close={() => setIsDetail(false)}
+          staffInfo={userListLoaded && userList.find((item) => item.id === itemId)}
+        />
+      )}
       {isCreate && <CreateUser hide={() => setIsCreate(false)} isCreate={isCreate} />}
       {currentUser === undefined && <Navigate to={'/auth'} />}
     </div>

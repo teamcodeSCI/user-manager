@@ -81,4 +81,13 @@
             background: #216491;
         }
     }
+    .error {
+        padding: 10px 20px;
+        text-align: center;
+        color: red;
+        font-size: 14px;
+        p {
+            margin: 0;
+        }
+    }
 }

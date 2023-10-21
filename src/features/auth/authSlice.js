@@ -44,9 +44,14 @@ const authSlice = createSlice({
       localStorage.setItem('token', action.payload.data.data.token);
     },
     loginFailure(state, action) {
+      console.log('action: ', action);
       state.loading = false;
       state.loaded = false;
-      switch (action.payload.response.status) {
+      if (action.payload.code === 'ERR_NETWORK') {
+        state.error = 'Lỗi kết nối';
+        return;
+      }
+      switch (action.payload.response?.status) {
         case 500:
           state.error = action.payload.response.data.message.errorInfo[2];
           break;

@@ -6,22 +6,27 @@ import { Tooltip } from 'react-tooltip';
 import NoticeModal from '@/components/NoticeModal';
 import StaffDetail from '@/components/StaffDetail';
 import CreateUser from '@/components/CreateUser';
-import { customStyles, paginationComponentOptions, userList } from '@/utils/util';
+import { customStyles, paginationComponentOptions } from '@/utils/util';
 import Search from '@/components/Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '@/features/auth/authApi';
 import { currentUserSelector, loadingAuthSelector } from '@/features/auth/authSlice';
 import Loading from '@/components/Loading';
 import { Navigate } from 'react-router-dom';
+import { fetchUser } from '@/features/userList/userApi';
+import { loadedUserListSelector, loadingUserListSelector, userListSelector } from '@/features/userList/userSlice';
+import { formatDate } from '@/utils/help';
 
 const Home = () => {
   const dispatch = useDispatch();
   const userLoading = useSelector(loadingAuthSelector);
-
   const currentUser = useSelector(currentUserSelector);
   if (currentUser === undefined) {
     localStorage.clear();
   }
+  const userListLoaded = useSelector(loadedUserListSelector);
+  const userListLoading = useSelector(loadingUserListSelector);
+  const userList = useSelector(userListSelector);
   const [isDelete, setIsDelete] = useState(false);
   const [isDetail, setIsDetail] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
@@ -38,35 +43,26 @@ const Home = () => {
     },
     {
       name: 'Họ và tên',
-      selector: (row) => row.name,
+      selector: (row) => row.first_name + ' ' + row.last_name,
       sortable: true,
     },
     {
       name: 'Điện thoại',
       selector: (row) => row.phone,
-      grow: 0.5,
     },
     {
       name: 'Email',
       selector: (row) => row.email,
     },
     {
-      name: 'Khối/ Thương hiệu',
-      selector: (row) => row.brand,
-    },
-    {
-      name: 'Phòng ban',
-      selector: (row) => row.department,
-    },
-    {
-      name: 'Chức vụ',
-      selector: (row) => row.position,
+      name: 'Ngày sinh',
+      selector: (row) => formatDate(row.birthday),
       grow: 0.5,
     },
-
     {
       name: '',
       right: true,
+      grow: 0.5,
       cell: (row) => (
         <div className={style['control']} style={{ display: 'flex' }}>
           <button
@@ -104,10 +100,11 @@ const Home = () => {
   ];
   useEffect(() => {
     dispatch(getUser());
+    dispatch(fetchUser());
   }, [dispatch]);
   return (
     <div>
-      {userLoading && <Loading />}
+      {(userLoading || userListLoading) && <Loading />}
       <Header />
       <div className={style['main']}>
         <div className={style['title']}>Danh sách user</div>
@@ -118,21 +115,23 @@ const Home = () => {
           </button>
         </div>
         <div className={style['dataTable']}>
-          <DataTable
-            columns={columns}
-            data={userList}
-            pagination
-            paginationComponentOptions={paginationComponentOptions}
-            paginationRowsPerPageOptions={[10, 20, 50]}
-            customStyles={customStyles}
-          />
+          {userListLoaded && (
+            <DataTable
+              columns={columns}
+              data={userList}
+              pagination
+              paginationComponentOptions={paginationComponentOptions}
+              paginationRowsPerPageOptions={[10, 20, 50]}
+              customStyles={customStyles}
+            />
+          )}
         </div>
       </div>
       {isDelete && (
         <NoticeModal hide={() => setIsDelete(false)} message={'Bạn có chắc muốn xóa không ?'} action={handleDelete} />
       )}
       {isDetail && <StaffDetail close={() => setIsDetail(false)} />}
-      {isCreate && <CreateUser hide={() => setIsCreate(false)} />}
+      {isCreate && <CreateUser hide={() => setIsCreate(false)} isCreate={isCreate} />}
       {currentUser === undefined && <Navigate to={'/auth'} />}
     </div>
   );

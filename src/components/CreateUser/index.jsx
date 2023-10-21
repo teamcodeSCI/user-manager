@@ -21,30 +21,16 @@ const CreateUser = ({ hide }) => {
             <input id="lastName" type="text" placeholder="A" />
           </div>
           <div className={style['inputGroup']}>
+            <label htmlFor="date">Ngày sinh:</label>
+            <input id="date" type="date" placeholder="0123456789" />
+          </div>
+          <div className={style['inputGroup']}>
             <label htmlFor="phone">Số điện thoại:</label>
             <input id="phone" type="text" placeholder="0123456789" />
           </div>
           <div className={style['inputGroup']}>
             <label htmlFor="email">Email:</label>
             <input id="email" type="text" placeholder="example@scigroup.com.vn" />
-          </div>
-          <div className={style['inputGroup']}>
-            <label htmlFor="brand">Khối/Thương hiệu:</label>
-            <select name="" id="brand">
-              <option value="">Chọn Khối/Thương hiệu</option>
-            </select>
-          </div>
-          <div className={style['inputGroup']}>
-            <label htmlFor="brand">Phòng ban:</label>
-            <select name="" id="brand">
-              <option value="">Chọn Phòng ban</option>
-            </select>
-          </div>
-          <div className={style['inputGroup']}>
-            <label htmlFor="brand">Chức vụ:</label>
-            <select name="" id="brand">
-              <option value="">Chọn Chức vụ</option>
-            </select>
           </div>
         </div>
         <div className={style['control']}>

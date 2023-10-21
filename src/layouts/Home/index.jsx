@@ -6,104 +6,8 @@ import { Tooltip } from 'react-tooltip';
 import NoticeModal from '@/components/NoticeModal';
 import StaffDetail from '@/components/StaffDetail';
 import CreateUser from '@/components/CreateUser';
+import { customStyles, paginationComponentOptions, userList } from '@/utils/util';
 
-const customStyles = {
-  headRow: {
-    style: {
-      borderBottom: '2px solid rgba(0, 0, 0, 0.12)',
-    },
-  },
-  headCells: {
-    style: {
-      paddingLeft: '8px',
-      paddingRight: '8px',
-      fontSize: '15px',
-      fontWeight: '600',
-    },
-  },
-  rows: {
-    style: {
-      minHeight: '50px',
-      fontSize: '14px',
-    },
-  },
-  cells: {
-    style: {
-      paddingLeft: '8px',
-      paddingRight: '8px',
-    },
-  },
-};
-
-const paginationComponentOptions = {
-  selectAllRowsItem: true,
-  selectAllRowsItemText: 'All',
-};
-const data = [
-  {
-    id: 1,
-    name: 'Đoàn Minh Đức',
-    phone: '0123456789',
-    email: 'duc@scigroup.com.vn',
-    brand: 'Sale & Marketing',
-    department: 'Phát triển web',
-    position: 'Nhân viên',
-  },
-  {
-    id: 2,
-    name: 'Đoàn Minh Đức',
-    phone: '0123456789',
-    email: 'duc@scigroup.com.vn',
-    brand: 'Sale & Marketing',
-    department: 'Phát triển web',
-    position: 'Nhân viên',
-  },
-  {
-    id: 3,
-    name: 'Đoàn Minh Đức',
-    phone: '0123456789',
-    email: 'duc@scigroup.com.vn',
-    brand: 'Sale & Marketing',
-    department: 'Phát triển web',
-    position: 'Nhân viên',
-  },
-  {
-    id: 4,
-    name: 'Đoàn Minh Đức',
-    phone: '0123456789',
-    email: 'duc@scigroup.com.vn',
-    brand: 'Sale & Marketing',
-    department: 'Phát triển web',
-    position: 'Nhân viên',
-  },
-  {
-    id: 5,
-    name: 'Đoàn Minh Đức',
-    phone: '0123456789',
-    email: 'duc@scigroup.com.vn',
-    brand: 'Sale & Marketing',
-    department: 'Phát triển web',
-    position: 'Nhân viên',
-  },
-  {
-    id: 6,
-    name: 'Đoàn Minh Đức',
-    phone: '0123456789',
-    email: 'duc@scigroup.com.vn',
-    brand: 'Sale & Marketing',
-    department: 'Phát triển web',
-    position: 'Nhân viên',
-  },
-  {
-    id: 7,
-    name: 'Đoàn Minh Đức',
-    phone: '0123456789',
-    email: 'duc@scigroup.com.vn',
-    brand: 'Sale & Marketing',
-    department: 'Phát triển web',
-    position: 'Nhân viên',
-  },
-];
 const Home = () => {
   const [isDelete, setIsDelete] = useState(false);
   const [isDetail, setIsDetail] = useState(false);
@@ -198,7 +102,7 @@ const Home = () => {
         <div className={style['dataTable']}>
           <DataTable
             columns={columns}
-            data={data}
+            data={userList}
             pagination
             paginationComponentOptions={paginationComponentOptions}
             paginationRowsPerPageOptions={[10, 20, 50]}

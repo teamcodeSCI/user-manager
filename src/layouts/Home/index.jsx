@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './home.module.scss';
 import Header from '@/components/Header';
 import DataTable from 'react-data-table-component';
@@ -8,8 +8,20 @@ import StaffDetail from '@/components/StaffDetail';
 import CreateUser from '@/components/CreateUser';
 import { customStyles, paginationComponentOptions, userList } from '@/utils/util';
 import Search from '@/components/Search';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '@/features/auth/authApi';
+import { currentUserSelector, loadingAuthSelector } from '@/features/auth/authSlice';
+import Loading from '@/components/Loading';
+import { Navigate } from 'react-router-dom';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const userLoading = useSelector(loadingAuthSelector);
+
+  const currentUser = useSelector(currentUserSelector);
+  if (currentUser === undefined) {
+    localStorage.clear();
+  }
   const [isDelete, setIsDelete] = useState(false);
   const [isDetail, setIsDetail] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
@@ -90,8 +102,12 @@ const Home = () => {
       ),
     },
   ];
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
   return (
     <div>
+      {userLoading && <Loading />}
       <Header />
       <div className={style['main']}>
         <div className={style['title']}>Danh sách user</div>
@@ -117,6 +133,7 @@ const Home = () => {
       )}
       {isDetail && <StaffDetail close={() => setIsDetail(false)} />}
       {isCreate && <CreateUser hide={() => setIsCreate(false)} />}
+      {currentUser === undefined && <Navigate to={'/auth'} />}
     </div>
   );
 };

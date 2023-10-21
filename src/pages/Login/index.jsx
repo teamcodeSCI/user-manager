@@ -4,35 +4,43 @@ import { Link, useNavigate } from 'react-router-dom';
 import { pressEnter, validateEmail } from '@/utils/help';
 import Notice from '@/components/Notice';
 import Loading from '@/components/Loading';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '@/features/auth/authApi';
+import { currentUserSelector, errorAuthSelector, loadingAuthSelector } from '@/features/auth/authSlice';
 
 const Login = () => {
+  const errorlogin = useSelector(errorAuthSelector);
+  const loginLoading = useSelector(loadingAuthSelector);
+  const currentUser = useSelector(currentUserSelector);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [login, setLogin] = useState({ email: '', password: '' });
+  const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [notify, setNotify] = useState('');
   const handleLogin = (e) => {
-    setLogin({ ...login, [e.target.name]: e.target.value });
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
   const clickLogin = () => {
-    if (login.email === '' || login.password === '') {
+    if (loginData.email === '' || loginData.password === '') {
       setNotify('Vui lòng nhập đầy đủ thông tin');
       return;
     }
-    if (!validateEmail(login.email)) {
+    if (!validateEmail(loginData.email)) {
       setNotify('Email không hợp lệ !');
       return;
     }
+    dispatch(login(loginData));
   };
   const handleClose = () => {
     setNotify('');
   };
   useEffect(() => {
     if (localStorage.getItem('token')) navigate('/');
-  }, [navigate]);
+  }, [navigate, currentUser]);
   return (
     <div className={style['login']}>
-      {false && <Loading />}
+      {loginLoading && <Loading />}
       {notify !== '' && <Notice notice={notify} close={handleClose} />}
+      {errorlogin !== '' && <Notice notice={errorlogin} close={handleClose} />}
       <div className={style['form']}>
         <div className={style['input']}>
           <label htmlFor="email">Email</label>
@@ -41,7 +49,7 @@ const Login = () => {
             type="text"
             name="email"
             onKeyDown={(e) => pressEnter(e, clickLogin)}
-            value={login.email}
+            value={loginData.email}
             onChange={handleLogin}
           />
         </div>
@@ -54,7 +62,7 @@ const Login = () => {
             type="password"
             name="password"
             onKeyDown={(e) => pressEnter(e, clickLogin)}
-            value={login.password}
+            value={loginData.password}
             onChange={handleLogin}
           />
         </div>

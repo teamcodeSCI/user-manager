@@ -10,6 +10,10 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    logout(state, action) {
+      state.currentUser = null;
+      localStorage.clear();
+    },
     register(state) {
       state.loading = true;
     },

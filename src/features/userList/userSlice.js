@@ -1,3 +1,4 @@
+import { removeAccents } from '@/utils/help';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -10,6 +11,11 @@ const userListSlice = createSlice({
   name: 'userList',
   initialState,
   reducers: {
+    searchUser: (state, action) => {
+      state.userList = state.userList.filter(
+        (item) => removeAccents(item.first_name + ' ' + item.last_name).search(removeAccents(action.payload)) !== -1,
+      );
+    },
     getAllUser: (state, action) => {
       state.loading = true;
     },

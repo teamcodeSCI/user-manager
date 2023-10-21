@@ -14,7 +14,11 @@ import { currentUserSelector, loadingAuthSelector } from '@/features/auth/authSl
 import Loading from '@/components/Loading';
 import { Navigate } from 'react-router-dom';
 import { fetchUser } from '@/features/userList/userApi';
-import { loadedUserListSelector, loadingUserListSelector, userListSelector } from '@/features/userList/userSlice';
+import userListSlice, {
+  loadedUserListSelector,
+  loadingUserListSelector,
+  userListSelector,
+} from '@/features/userList/userSlice';
 import { formatDate } from '@/utils/help';
 
 const Home = () => {
@@ -27,6 +31,7 @@ const Home = () => {
   const userListLoaded = useSelector(loadedUserListSelector);
   const userListLoading = useSelector(loadingUserListSelector);
   const userList = useSelector(userListSelector);
+  const [search, setSearch] = useState('');
   const [isDelete, setIsDelete] = useState(false);
   const [isDetail, setIsDetail] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
@@ -34,6 +39,16 @@ const Home = () => {
   const handleDelete = () => {
     setIsDelete(false);
     console.log(itemId);
+  };
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    if (e.target.value === '') {
+      dispatch(fetchUser());
+      return;
+    }
+  };
+  const clickSearch = () => {
+    if (search !== '') dispatch(userListSlice.actions.searchUser(search));
   };
   const columns = [
     {
@@ -109,7 +124,7 @@ const Home = () => {
       <div className={style['main']}>
         <div className={style['title']}>Danh sách user</div>
         <div className={style['action']}>
-          <Search />
+          <Search onChange={handleSearch} value={search} clickSearch={clickSearch} />
           <button onClick={() => setIsCreate(true)}>
             Thêm mới <i className="icon-plus-1"></i>
           </button>

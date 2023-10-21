@@ -33,3 +33,12 @@ export const formatDate = (d) => {
   const date = new Date(d);
   return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 };
+export const removeAccents = (str) => {
+  const string = str || '';
+  return string
+    .normalize('NFD')
+    .toLowerCase()
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D');
+};

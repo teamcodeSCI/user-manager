@@ -1,6 +1,7 @@
 {
   "name": "user-manager",
   "version": "0.1.0",
+  "homepage": "https://scigroup.com.vn/app/users",
   "private": true,
   "dependencies": {
     "@fontsource/barlow": "^5.0.8",

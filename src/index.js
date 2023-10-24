@@ -11,7 +11,7 @@ import store from './app/store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Router basename={''}>
+    <Router basename={'app/users'}>
       <Provider store={store}>
         <App />
       </Provider>

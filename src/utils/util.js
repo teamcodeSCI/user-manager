@@ -1,4 +1,4 @@
-export const API_URL = 'http://10.196.60.95/project/user-manager/public/api/';
+export const API_URL = 'https://scigroup.com.vn/app/users/admin/public/api/';
 export const customStyles = {
   headRow: {
     style: {
